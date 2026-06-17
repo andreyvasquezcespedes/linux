@@ -1,0 +1,49 @@
+#Crear el archivo bath
+
+#Le da permisos y lo mueve
+chmod +x hello.sh
+sudo mv hello.sh /usr/local/bin/hello.sh
+
+#Crea el service
+sudo nano /etc/systemd/system/hola.service
+
+#Copia dentro del service
+[Unit]
+Description=Servicio personalizado que dice hola
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/hello.sh
+Restart=always
+RestartSec=3
+StandardOutput=append:/var/log/hola.log
+StandardError=append:/var/log/hola.log
+
+[Install]
+WantedBy=multi-user.target
+
+#Cierra Nano
+
+#Recarga los servicios
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+
+#Habilita arranque
+sudo systemctl enable hola.service
+
+#Inicia
+sudo systemctl start hola.service
+
+#Revisa estado
+systemctl status hola
+
+#Log
+tail -f /var/log/hola.log
+
+
+
+#Para eliminarlo
+sudo systemctl stop hola
+sudo systemctl disable hola
+sudo rm /etc/systemd/system/hola.service
+sudo systemctl daemon-reload

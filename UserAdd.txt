@@ -1,0 +1,20 @@
+sudo useradd alice 
+sudo passwd alice
+sudo user add bob
+sudo passwd bob
+
+sudo groupadd devteam
+sudo usermod -aG devteam alice 
+sudo usermod -aG devteam bob
+
+
+mkdir proyecto-secret 
+sudo chown alice:devteam proyecto-secret 
+sudo chmod 770 proyecto-secret
+
+touch proyecto-secret/top-secret.txt 
+chmod 740 proyecto-secret/top-secret.txt
+
+ls -l proyecto-secret
+
+touch proyecto-secret/top-secret.txt chmod 740 proyecto-secret/top-secret.txt
